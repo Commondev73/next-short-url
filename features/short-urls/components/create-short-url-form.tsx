@@ -22,6 +22,7 @@ import {
   type CreateShortUrlDto,
 } from "../schemas/create-short-url.schema";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner"
 
 const CreateShortUrlForm = () => {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -48,6 +49,7 @@ const CreateShortUrlForm = () => {
           is_active: true,
           expires_at: undefined,
         });
+        toast.success("Short URL created successfully");
       },
     });
   };
@@ -59,7 +61,6 @@ const CreateShortUrlForm = () => {
           {error.message}
         </p>
       )}
-
       <Controller
         name="original_url"
         control={control}

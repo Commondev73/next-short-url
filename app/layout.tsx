@@ -2,6 +2,7 @@ import Navbar from "@/components/navigation/navbar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/providers/query-provider";
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,6 +29,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="min-h-full flex flex-col gap-8">
         <QueryProvider>
           <Navbar />
+          <Toaster position="top-right" />
           {children}
         </QueryProvider>
       </body>

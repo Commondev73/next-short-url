@@ -23,7 +23,7 @@ import {
 } from "../schemas/update-short-url.schema";
 import type { ShortUrl } from "../types/short-url.type";
 import { Spinner } from "@/components/ui/spinner";
-
+import { toast } from "sonner"
 interface UpdateShortUrlFormProps {
   shortUrl: ShortUrl;
 }
@@ -50,6 +50,7 @@ const UpdateShortUrlForm = ({ shortUrl }: UpdateShortUrlFormProps) => {
       {
         onSuccess: () => {
           reset(data);
+          toast.success("Short URL updated successfully");
         },
       },
     );

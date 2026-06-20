@@ -18,6 +18,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useDeleteShortUrl } from "../hooks/use-delete-short-url";
 import { useListShortUrls } from "../hooks/use-list-short-urls";
 import type { ShortUrl } from "../types/short-url.type";
+import { toast } from "sonner";
 
 const PER_PAGE = 10;
 
@@ -38,7 +39,14 @@ const ListShortUrl = () => {
   const pagination = data?.pagination;
 
   const handleDelete = (id: number) => {
-    deleteShortUrl(String(id));
+    deleteShortUrl(String(id), {
+      onSuccess: () => {
+        toast.success("Short URL deleted successfully");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
   };
 
   if (isPending) {
