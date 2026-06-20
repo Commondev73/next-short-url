@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { clearAuthTokenCookie, setAuthTokenCookie } from "@/lib/auth/cookie";
 import type { User } from "../types/auth.type";
 
 interface AuthState {
@@ -16,10 +17,22 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       accessToken: null,
       refreshToken: null,
-      setAuth: (user, accessToken, refreshToken) =>
-        set({ user, accessToken, refreshToken }),
-      clearAuth: () => set({ user: null, accessToken: null, refreshToken: null }),
+      setAuth: (user, accessToken, refreshToken) => {
+        setAuthTokenCookie(accessToken);
+        set({ user, accessToken, refreshToken });
+      },
+      clearAuth: () => {
+        clearAuthTokenCookie();
+        set({ user: null, accessToken: null, refreshToken: null });
+      },
     }),
-    { name: "auth-storage" },
+    {
+      name: "auth-storage",
+      onRehydrateStorage: () => (state) => {
+        if (state?.accessToken) {
+          setAuthTokenCookie(state.accessToken);
+        }
+      },
+    },
   ),
 );

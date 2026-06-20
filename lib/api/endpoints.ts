@@ -8,6 +8,7 @@ export const endpoints = {
 
   shortUrls: {
     list: "/short-urls",
+    get: (id: string) => `/short-urls/info/${id}`,
     create: "/short-urls",
     update: (id: string) => `/short-urls/${id}`,
     delete: (id: string) => `/short-urls/${id}`,
@@ -16,6 +17,7 @@ export const endpoints = {
   admin: {
     shortUrls: {
       list: "/admin/short-urls",
+      get: (id: string) => `/admin/short-urls/${id}`,
       update: (id: string) => `/admin/short-urls/${id}`,
       delete: (id: string) => `/admin/short-urls/${id}`,
     },

@@ -5,7 +5,7 @@ export interface User extends Timestamps {
   name: string;
   email: string;
   username: string;
-  role: string;
+  role: "user" | "admin";
 }
 
 export interface AuthResponse {
