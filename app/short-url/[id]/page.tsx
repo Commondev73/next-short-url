@@ -14,6 +14,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { UpdateShortUrlForm, useShortUrl } from "@/features/short-urls";
 import { Spinner } from "@/components/ui/spinner";
 
+
 const ShortUrlUpdatePage = () => {
   const params = useParams<{ id: string }>();
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -27,29 +28,20 @@ const ShortUrlUpdatePage = () => {
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle>Update short URL</CardTitle>
-          <CardDescription>Edit your existing short link details.</CardDescription>
+          <CardDescription>
+            Edit your existing short link details.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          {!accessToken ? (
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                Please login first before updating a short URL.
-              </p>
-              <Button asChild>
-                <Link href="/login">Login</Link>
-              </Button>
-            </div>
-          ) : isPending ? (
-            <Spinner className="size-8" />
-          ) : error ? (
+          {error && (
             <p className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">
               {error.message}
             </p>
-          ) : !shortUrl ? (
-            <p className="text-sm text-muted-foreground">Short URL not found.</p>
-          ) : (
-            <UpdateShortUrlForm shortUrl={shortUrl} />
           )}
+
+          {isPending && <Spinner className="size-8" />}
+
+          {!isPending && shortUrl && <UpdateShortUrlForm shortUrl={shortUrl} />}
         </CardContent>
       </Card>
     </div>

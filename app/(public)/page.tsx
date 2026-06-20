@@ -1,5 +1,7 @@
-const Home = () => {
-  return <div className="">Home</div>;
+import { redirect } from "next/navigation";
+
+const HomePage = async () => {
+  redirect("/short-url");
 };
 
-export default Home;
+export default HomePage;
