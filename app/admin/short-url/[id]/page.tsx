@@ -8,15 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { UpdateShortUrlForm, useShortUrl } from "@/features/short-urls";
+import { UpdateAdminShortUrlForm, useAdminShortUrl } from "@/features/short-urls";
 import { Spinner } from "@/components/ui/spinner";
 
-
-const ShortUrlUpdatePage = () => {
+const AdminShortUrlUpdatePage = () => {
   const params = useParams<{ id: string }>();
   const id = params.id ?? "";
 
-  const { data, isPending, error } = useShortUrl(id);
+  const { data, isPending, error } = useAdminShortUrl(id);
   const shortUrl = data?.data;
 
   return (
@@ -25,7 +24,7 @@ const ShortUrlUpdatePage = () => {
         <CardHeader>
           <CardTitle>Update short URL</CardTitle>
           <CardDescription>
-            Edit your existing short link details.
+            Edit short link details (admin).
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -37,11 +36,11 @@ const ShortUrlUpdatePage = () => {
 
           {isPending && <Spinner className="size-8" />}
 
-          {!isPending && shortUrl && <UpdateShortUrlForm shortUrl={shortUrl} />}
+          {!isPending && shortUrl && <UpdateAdminShortUrlForm shortUrl={shortUrl} />}
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default ShortUrlUpdatePage;
+export default AdminShortUrlUpdatePage;

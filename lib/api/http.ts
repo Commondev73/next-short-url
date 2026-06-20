@@ -1,23 +1,26 @@
+import { useAuthStore } from "@/features/auth/store/auth.store";
 import { fetcher } from "./fetcher";
 
-export const http = {
-  get: <T>(url: string, token?: string) =>
-    fetcher<T>(url, { method: "GET", token }),
+const getAccessToken = () => useAuthStore.getState().accessToken ?? undefined;
 
-  post: <T>(url: string, body?: unknown, token?: string) =>
+export const http = {
+  get: <T>(url: string) =>
+    fetcher<T>(url, { method: "GET", token: getAccessToken() }),
+
+  post: <T>(url: string, body?: unknown) =>
     fetcher<T>(url, {
       method: "POST",
       body: JSON.stringify(body),
-      token,
+      token: getAccessToken(),
     }),
 
-  put: <T>(url: string, body?: unknown, token?: string) =>
+  put: <T>(url: string, body?: unknown) =>
     fetcher<T>(url, {
       method: "PUT",
       body: JSON.stringify(body),
-      token,
+      token: getAccessToken(),
     }),
 
-  delete: <T>(url: string, token?: string) =>
-    fetcher<T>(url, { method: "DELETE", token }),
+  delete: <T>(url: string) =>
+    fetcher<T>(url, { method: "DELETE", token: getAccessToken() }),
 };

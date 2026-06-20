@@ -15,39 +15,42 @@ import { cn } from "@/lib/utils";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useCreateShortUrl } from "../hooks/use-create-short-url";
+import { useAdminUpdateShortUrl } from "../hooks/use-admin-update-short-url";
 import {
-  createShortUrlSchema,
-  type CreateShortUrlDto,
-} from "../schemas/create-short-url.schema";
+  updateShortUrlSchema,
+  type UpdateShortUrlDto,
+} from "../schemas/update-short-url.schema";
+import type { ShortUrl } from "../types/short-url.type";
 import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-const CreateShortUrlForm = () => {
-  const { mutate: createShortUrl, isPending, error } = useCreateShortUrl();
+interface UpdateAdminShortUrlFormProps {
+  shortUrl: ShortUrl;
+}
 
-  const { handleSubmit, control, reset } = useForm<CreateShortUrlDto>({
-    resolver: standardSchemaResolver(createShortUrlSchema),
+const UpdateAdminShortUrlForm = ({ shortUrl }: UpdateAdminShortUrlFormProps) => {
+  const { mutate: updateShortUrl, isPending, error } = useAdminUpdateShortUrl();
+
+  const { handleSubmit, control, reset } = useForm<UpdateShortUrlDto>({
+    resolver: standardSchemaResolver(updateShortUrlSchema),
     defaultValues: {
-      original_url: "",
-      title: "",
-      is_active: true,
-      expires_at: undefined,
+      original_url: shortUrl.original_url,
+      title: shortUrl.title ?? "",
+      is_active: shortUrl.is_active,
+      expires_at: shortUrl.expires_at ?? undefined,
     },
   });
 
-  const onSubmit = (data: CreateShortUrlDto) => {
-    createShortUrl(data, {
-      onSuccess: () => {
-        reset({
-          original_url: "",
-          title: "",
-          is_active: true,
-          expires_at: undefined,
-        });
-        toast.success("Short URL created successfully");
+  const onSubmit = (data: UpdateShortUrlDto) => {
+    updateShortUrl(
+      { id: String(shortUrl.id), data },
+      {
+        onSuccess: () => {
+          reset(data);
+          toast.success("Short URL updated successfully");
+        },
       },
-    });
+    );
   };
 
   return (
@@ -57,6 +60,7 @@ const CreateShortUrlForm = () => {
           {error.message}
         </p>
       )}
+
       <Controller
         name="original_url"
         control={control}
@@ -146,10 +150,10 @@ const CreateShortUrlForm = () => {
       />
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? <Spinner className="size-4" /> : "Create Short URL"}
+        {isPending ? <Spinner className="size-4" /> : "Update Short URL"}
       </Button>
     </form>
   );
 };
 
-export default CreateShortUrlForm;
+export default UpdateAdminShortUrlForm;

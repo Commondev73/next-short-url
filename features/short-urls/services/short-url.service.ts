@@ -28,22 +28,22 @@ const buildShortUrlsListUrl = ({ page, perPage }: ShortUrlsQueryParams = {}) => 
   return `${endpoints.shortUrls.list}?${queryString}`;
 };
 
-export const getListShortUrls = (token: string, params?: ShortUrlsQueryParams) => {
-  return http.get<ShortUrlsResponse>(buildShortUrlsListUrl(params), token);
-}
+export const getListShortUrls = (params?: ShortUrlsQueryParams) => {
+  return http.get<ShortUrlsResponse>(buildShortUrlsListUrl(params));
+};
 
-export const getShortUrl = (id: string, token: string) => {
-  return http.get<ApiResponse<ShortUrl>>(endpoints.shortUrls.get(id), token);
-}
+export const getShortUrl = (id: string) => {
+  return http.get<ApiResponse<ShortUrl>>(endpoints.shortUrls.get(id));
+};
 
-export const createShortUrl = (data: CreateShortUrlDto, token: string) => {
-  return http.post<ApiResponse<ShortUrl>>(endpoints.shortUrls.create, data, token);
-}
+export const createShortUrl = (data: CreateShortUrlDto) => {
+  return http.post<ApiResponse<ShortUrl>>(endpoints.shortUrls.create, data);
+};
 
-export const updateShortUrl = (id: string, data: UpdateShortUrlDto, token: string) => {
-  return http.put<ApiResponse<ShortUrl>>(endpoints.shortUrls.update(id), data, token);
-}
+export const updateShortUrl = (id: string, data: UpdateShortUrlDto) => {
+  return http.put<ApiResponse<ShortUrl>>(endpoints.shortUrls.update(id), data);
+};
 
-export const deleteShortUrl = (id: string, token: string) => {
-  return http.delete<ApiResponse<null>>(endpoints.shortUrls.delete(id), token);
-}
+export const deleteShortUrl = (id: string) => {
+  return http.delete<ApiResponse<null>>(endpoints.shortUrls.delete(id));
+};

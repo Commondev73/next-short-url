@@ -14,22 +14,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDeleteShortUrl } from "../hooks/use-delete-short-url";
-import { useListShortUrls } from "../hooks/use-list-short-urls";
+import { useAdminDeleteShortUrl } from "../hooks/use-admin-delete-short-url";
+import { useAdminListShortUrls } from "../hooks/use-admin-list-short-urls";
 import type { ShortUrl } from "../types/short-url.type";
 import { toast } from "sonner";
 
 const PER_PAGE = 10;
 
-const ListShortUrl = () => {
+const ListAdminShortUrl = () => {
   const [page, setPage] = useState(1);
 
-  const { data, isPending, error } = useListShortUrls({
+  const { data, isPending, error } = useAdminListShortUrls({
     page,
     perPage: PER_PAGE,
   });
 
-  const { mutate: deleteShortUrl, isPending: isDeleting } = useDeleteShortUrl();
+  const { mutate: deleteShortUrl, isPending: isDeleting } = useAdminDeleteShortUrl();
 
   const shortUrls: ShortUrl[] = data?.data ?? [];
   const pagination = data?.pagination;
@@ -58,14 +58,7 @@ const ListShortUrl = () => {
   }
 
   if (shortUrls.length === 0) {
-    return (
-      <div className="space-y-3">
-        <p className="text-sm text-muted-foreground">No short URLs yet.</p>
-        <Button asChild>
-          <Link href="/short-url/create">Create short URL</Link>
-        </Button>
-      </div>
-    );
+    return <p className="text-sm text-muted-foreground">No short URLs found.</p>;
   }
 
   return (
@@ -73,6 +66,7 @@ const ListShortUrl = () => {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>User ID</TableHead>
             <TableHead>Short URL</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Original URL</TableHead>
@@ -85,6 +79,7 @@ const ListShortUrl = () => {
         <TableBody>
           {shortUrls.map((shortUrl) => (
             <TableRow key={shortUrl.id}>
+              <TableCell>{shortUrl.user_id}</TableCell>
               <TableCell className="truncate font-medium">
                 {shortUrl.short_url ? (
                   <a
@@ -124,7 +119,7 @@ const ListShortUrl = () => {
               <TableCell className="text-right">
                 <div className="flex justify-end gap-1">
                   <Button variant="ghost" size="icon-sm" asChild>
-                    <Link href={`/short-url/${shortUrl.id}`}>
+                    <Link href={`/admin/short-url/${shortUrl.id}`}>
                       <Pencil />
                     </Link>
                   </Button>
@@ -173,4 +168,4 @@ const ListShortUrl = () => {
   );
 };
 
-export default ListShortUrl;
+export default ListAdminShortUrl;

@@ -27,7 +27,12 @@ const LoginForm = () => {
     login(data, {
       onSuccess: ({ data: auth }) => {
         setAuth(auth.user, auth.access_token, auth.refresh_token);
-        router.replace("/short-url");
+
+        if (auth.user.role === "admin") {
+          router.replace("/admin/short-url");
+        } else {
+          router.replace("/short-url");
+        }
       },
     });
   };
