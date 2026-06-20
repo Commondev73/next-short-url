@@ -1,14 +1,12 @@
 
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { RegisterForm } from "@/features/auth";
-import Link from "next/link";
 
 const RegisterPage = () => {
   return (
