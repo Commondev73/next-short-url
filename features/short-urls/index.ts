@@ -31,3 +31,4 @@ export { useDeleteShortUrl } from "./hooks/use-delete-short-url";
 // components
 export { default as CreateShortUrlForm } from "./components/create-short-url-form";
 export { default as UpdateShortUrlForm } from "./components/update-short-url-form";
+export { default as ListShortUrl } from "./components/list-short-url";

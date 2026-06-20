@@ -22,6 +22,7 @@ import {
   type UpdateShortUrlDto,
 } from "../schemas/update-short-url.schema";
 import type { ShortUrl } from "../types/short-url.type";
+import { Spinner } from "@/components/ui/spinner";
 
 interface UpdateShortUrlFormProps {
   shortUrl: ShortUrl;
@@ -151,7 +152,7 @@ const UpdateShortUrlForm = ({ shortUrl }: UpdateShortUrlFormProps) => {
       />
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? "Updating short URL..." : "Update Short URL"}
+        {isPending ? <Spinner className="size-4" /> : "Update Short URL"}
       </Button>
     </form>
   );
