@@ -18,7 +18,7 @@ const LoginForm = () => {
   const { handleSubmit, control } = useForm<LoginDto>({
     resolver: standardSchemaResolver(loginSchema),
     defaultValues: {
-      email: "",
+      emailOrUsername: "",
       password: "",
     },
   });
@@ -44,17 +44,17 @@ const LoginForm = () => {
       )}
 
       <Controller
-        name="email"
+        name="emailOrUsername"
         control={control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+            <FieldLabel htmlFor={field.name}>Email or Username</FieldLabel>
             <Input
               {...field}
               id={field.name}
-              type="email"
+              type="text"
               aria-invalid={fieldState.invalid}
-              placeholder="you@example.com"
+              placeholder="you@example.com or username"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
