@@ -38,10 +38,6 @@ const ListShortUrl = () => {
   const pagination = data?.pagination;
 
   const handleDelete = (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this short URL?")) {
-      return;
-    }
-
     deleteShortUrl(String(id));
   };
 
@@ -73,7 +69,7 @@ const ListShortUrl = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Short code</TableHead>
+            <TableHead>Short URL</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Original URL</TableHead>
             <TableHead>Clicks</TableHead>
@@ -85,10 +81,34 @@ const ListShortUrl = () => {
         <TableBody>
           {shortUrls.map((shortUrl) => (
             <TableRow key={shortUrl.id}>
-              <TableCell className="font-medium">{shortUrl.short_code}</TableCell>
+              <TableCell className="truncate font-medium">
+                {shortUrl.short_url ? (
+                  <a
+                    href={shortUrl.short_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {shortUrl.short_url}
+                  </a>
+                ) : (
+                  shortUrl.short_code
+                )}
+              </TableCell>
               <TableCell>{shortUrl.title ?? "-"}</TableCell>
-              <TableCell className="max-w-[200px] truncate">
-                {shortUrl.original_url}
+              <TableCell className="truncate">
+                {shortUrl.original_url ? (
+                  <a
+                    href={shortUrl.original_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {shortUrl.original_url}
+                  </a>
+                ) : (
+                  shortUrl.original_url
+                )}
               </TableCell>
               <TableCell>{shortUrl.click_count}</TableCell>
               <TableCell>{shortUrl.is_active ? "Active" : "Inactive"}</TableCell>
@@ -119,7 +139,7 @@ const ListShortUrl = () => {
         </TableBody>
       </Table>
 
-      {pagination && pagination.last_page > 1 && (
+      {pagination && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
             Page {pagination.current_page} of {pagination.last_page} ({pagination.total}{" "}

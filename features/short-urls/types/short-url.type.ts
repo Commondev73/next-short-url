@@ -9,6 +9,7 @@ export interface ShortUrl extends Timestamps {
   click_count: number;
   is_active: boolean;
   expires_at: string | null;
+  short_url: string | null;
 }
 
 export interface ShortUrlsResponse extends ApiResponse<ShortUrl[]> {
