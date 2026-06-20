@@ -16,6 +16,9 @@ export { useLogin } from "./hooks/use-login";
 export { useLogout } from "./hooks/use-logout";
 export { useRefresh } from "./hooks/use-refresh";
 
+// store
+export { useAuthStore } from "./store/auth.store";
+
 // components
 export { default as LoginForm } from "./components/login-form";
 export { default as RegisterForm } from "./components/register-form";
