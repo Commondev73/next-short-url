@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const router = useRouter();
-  const { user, accessToken, refreshToken, clearAuth } = useAuthStore();
-  const { mutate: logout } = useLogout(accessToken ?? "", refreshToken ?? "");
+  const { user, clearAuth } = useAuthStore();
+  const { mutate: logout } = useLogout();
 
   const handleLogout = () => {
     logout(undefined, {

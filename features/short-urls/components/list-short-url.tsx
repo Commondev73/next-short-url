@@ -14,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useDeleteShortUrl } from "../hooks/use-delete-short-url";
 import { useListShortUrls } from "../hooks/use-list-short-urls";
 import type { ShortUrl } from "../types/short-url.type";
@@ -23,17 +22,14 @@ import { toast } from "sonner";
 const PER_PAGE = 10;
 
 const ListShortUrl = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
   const [page, setPage] = useState(1);
 
-  const { data, isPending, error } = useListShortUrls(accessToken ?? "", {
+  const { data, isPending, error } = useListShortUrls({
     page,
     perPage: PER_PAGE,
   });
 
-  const { mutate: deleteShortUrl, isPending: isDeleting } = useDeleteShortUrl(
-    accessToken ?? "",
-  );
+  const { mutate: deleteShortUrl, isPending: isDeleting } = useDeleteShortUrl();
 
   const shortUrls: ShortUrl[] = data?.data ?? [];
   const pagination = data?.pagination;

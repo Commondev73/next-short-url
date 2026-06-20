@@ -15,7 +15,6 @@ import { cn } from "@/lib/utils";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useCreateShortUrl } from "../hooks/use-create-short-url";
 import {
   createShortUrlSchema,
@@ -25,10 +24,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner"
 
 const CreateShortUrlForm = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const { mutate: createShortUrl, isPending, error } = useCreateShortUrl(
-    accessToken ?? "",
-  );
+  const { mutate: createShortUrl, isPending, error } = useCreateShortUrl();
 
   const { handleSubmit, control, reset } = useForm<CreateShortUrlDto>({
     resolver: standardSchemaResolver(createShortUrlSchema),

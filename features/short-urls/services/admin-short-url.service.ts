@@ -27,18 +27,18 @@ const buildAdminShortUrlsListUrl = ({ page, perPage }: ShortUrlsQueryParams = {}
   return `${endpoints.admin.shortUrls.list}?${queryString}`;
 };
 
-export const getAdminListShortUrls = (token: string, params?: ShortUrlsQueryParams) => {
-  return http.get<ShortUrlsResponse>(buildAdminShortUrlsListUrl(params), token);
+export const getAdminListShortUrls = (params?: ShortUrlsQueryParams) => {
+  return http.get<ShortUrlsResponse>(buildAdminShortUrlsListUrl(params));
 };
 
-export const getAdminShortUrl = (id: string, token: string) => {
-  return http.get<ApiResponse<ShortUrl>>(endpoints.admin.shortUrls.get(id), token);
+export const getAdminShortUrl = (id: string) => {
+  return http.get<ApiResponse<ShortUrl>>(endpoints.admin.shortUrls.get(id));
 };
 
-export const updateAdminShortUrl = (id: string, data: UpdateShortUrlDto, token: string) => {
-  return http.put<ApiResponse<ShortUrl>>(endpoints.admin.shortUrls.update(id), data, token);
+export const updateAdminShortUrl = (id: string, data: UpdateShortUrlDto) => {
+  return http.put<ApiResponse<ShortUrl>>(endpoints.admin.shortUrls.update(id), data);
 };
 
-export const deleteAdminShortUrl = (id: string, token: string) => {
-  return http.delete<ApiResponse<null>>(endpoints.admin.shortUrls.delete(id), token);
+export const deleteAdminShortUrl = (id: string) => {
+  return http.delete<ApiResponse<null>>(endpoints.admin.shortUrls.delete(id));
 };

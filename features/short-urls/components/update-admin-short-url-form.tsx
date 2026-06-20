@@ -15,7 +15,6 @@ import { cn } from "@/lib/utils";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useAdminUpdateShortUrl } from "../hooks/use-admin-update-short-url";
 import {
   updateShortUrlSchema,
@@ -30,10 +29,7 @@ interface UpdateAdminShortUrlFormProps {
 }
 
 const UpdateAdminShortUrlForm = ({ shortUrl }: UpdateAdminShortUrlFormProps) => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const { mutate: updateShortUrl, isPending, error } = useAdminUpdateShortUrl(
-    accessToken ?? "",
-  );
+  const { mutate: updateShortUrl, isPending, error } = useAdminUpdateShortUrl();
 
   const { handleSubmit, control, reset } = useForm<UpdateShortUrlDto>({
     resolver: standardSchemaResolver(updateShortUrlSchema),

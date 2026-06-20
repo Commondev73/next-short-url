@@ -8,16 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 import { UpdateAdminShortUrlForm, useAdminShortUrl } from "@/features/short-urls";
 import { Spinner } from "@/components/ui/spinner";
 
 const AdminShortUrlUpdatePage = () => {
   const params = useParams<{ id: string }>();
-  const accessToken = useAuthStore((state) => state.accessToken);
   const id = params.id ?? "";
 
-  const { data, isPending, error } = useAdminShortUrl(id, accessToken ?? "");
+  const { data, isPending, error } = useAdminShortUrl(id);
   const shortUrl = data?.data;
 
   return (

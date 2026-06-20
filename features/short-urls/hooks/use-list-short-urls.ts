@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 import { getListShortUrls } from "../services/short-url.service";
 import type {
   ShortUrlsQueryParams,
@@ -6,11 +7,13 @@ import type {
 } from "../types/short-url.type";
 import { shortUrlKeys } from "./query-keys";
 
-export function useListShortUrls(token: string, params: ShortUrlsQueryParams = {}) {
+export function useListShortUrls(params: ShortUrlsQueryParams = {}) {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
   return useQuery<ShortUrlsResponse>({
     queryKey: shortUrlKeys.list(params),
-    queryFn: () => getListShortUrls(token, params),
-    enabled: !!token,
+    queryFn: () => getListShortUrls(params),
+    enabled: !!accessToken,
   });
 }
 

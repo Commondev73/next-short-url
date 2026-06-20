@@ -28,10 +28,8 @@ export const refresh = (refreshToken: string) => {
   );
 };
 
-export const logout = (accessToken: string, refreshToken: string) => {
-  return http.post<ApiResponse<null>>(
-    endpoints.auth.logout,
-    { refresh_token: refreshToken },
-    accessToken,
-  );
+export const logout = (refreshToken: string) => {
+  return http.post<ApiResponse<null>>(endpoints.auth.logout, {
+    refresh_token: refreshToken,
+  });
 };

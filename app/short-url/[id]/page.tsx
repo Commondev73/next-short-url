@@ -8,17 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 import { UpdateShortUrlForm, useShortUrl } from "@/features/short-urls";
 import { Spinner } from "@/components/ui/spinner";
 
 
 const ShortUrlUpdatePage = () => {
   const params = useParams<{ id: string }>();
-  const accessToken = useAuthStore((state) => state.accessToken);
   const id = params.id ?? "";
 
-  const { data, isPending, error } = useShortUrl(id, accessToken ?? "");
+  const { data, isPending, error } = useShortUrl(id);
   const shortUrl = data?.data;
 
   return (
